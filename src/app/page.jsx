@@ -1,8 +1,11 @@
 "use client"
+// Importa la variable products desde un archivo llamado products en el mismo directorio.
 import { products } from "./products"
+// Declara un componente funcional llamado App.
 function App() {
-
+// Declara una función handlePay que toma un product como argumento y es una función asíncrona.
   const handlePay = async (product) => {
+    // Hace una solicitud POST a la ruta /api/checkout, enviando el product como JSON en el cuerpo de la solicitud.
     const res = await fetch('/api/checkout', {
       method: "POST",
       body: JSON.stringify(product),
@@ -10,10 +13,14 @@ function App() {
         "Content-Type": "application/json"
       }
     })
+    // Espera la respuesta de la solicitud como JSON y la asigna a la variable session.
     const session = await res.json()
+    // Redirige la ventana del navegador a la URL proporcionada en session.
     window.location = session.url
   }
-
+  // Devuelve el JSX que representa la interfaz de usuario. Se renderiza un encabezado "Productos" 
+  // seguido de una cuadrícula de productos, donde cada producto se muestra en una tarjeta con su nombre, precio, imagen 
+  // y un botón "Pagar" que, al hacer clic, llama a la función handlePay con el producto correspondiente.
   return(
     <div className="px-44">
       <h1 className="text-3xl font-bold text-center my-10">Productos</h1>
@@ -34,4 +41,5 @@ function App() {
   )
 }
 
+// Exporta el componente App como la exportación predeterminada del archivo, haciéndolo disponible para ser importado en otros archivos.
 export default App
